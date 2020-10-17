@@ -1,0 +1,10 @@
+inkscape -w 16 -h 16 Icon.svg --export-filename Icon-16.png
+inkscape -w 20 -h 20 Icon.svg --export-filename Icon-20.png
+inkscape -w 24 -h 24 Icon.svg --export-filename Icon-24.png
+inkscape -w 32 -h 32 Icon.svg --export-filename Icon-32.png
+inkscape -w 40 -h 40 Icon.svg --export-filename Icon-40.png
+inkscape -w 48 -h 48 Icon.svg --export-filename Icon-48.png
+inkscape -w 64 -h 64 Icon.svg --export-filename Icon-64.png
+inkscape -w 96 -h 96 Icon.svg --export-filename Icon-96.png
+inkscape -w 128 -h 128 Icon.svg --export-filename Icon-128.png
+inkscape -w 256 -h 256 Icon.svg --export-filename Icon-256.png
