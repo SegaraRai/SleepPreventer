@@ -37,7 +37,7 @@ void ConfigFile::Load() {
     }
 
     const auto eqPos = line.find_first_of(L'=');
-    if (eqPos == std::string::npos) {
+    if (eqPos == std::wstring::npos) {
       continue;
     }
 

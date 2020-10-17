@@ -439,7 +439,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
   // instantiate ConfigFile
   const auto exeFilepath = GetModuleFilepath(NULL);
-  const std::wstring configFilepath = exeFilepath.substr(0, exeFilepath.size() - 4) + L".cfg"s;
+  const auto bsPos = exeFilepath.find_last_of(L'\\');
+  const auto configFilepath = bsPos == std::wstring::npos ? exeFilepath + L".cfg"s : exeFilepath.substr(0, bsPos + 1) + L"SleepPreventer.cfg"s;
   gConfigFile.emplace(configFilepath);
 
   auto& configFile = gConfigFile.value();
