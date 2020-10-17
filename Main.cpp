@@ -439,7 +439,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
   // instantiate ConfigFile
   const auto exeFilepath = GetModuleFilepath(NULL);
-  const std::wstring configFilepath = exeFilepath.substr(0, exeFilepath.size() - 3) + L".cfg"s;
+  const std::wstring configFilepath = exeFilepath.substr(0, exeFilepath.size() - 4) + L".cfg"s;
   gConfigFile.emplace(configFilepath);
 
   auto& configFile = gConfigFile.value();
