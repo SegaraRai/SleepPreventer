@@ -34,3 +34,9 @@ BOOL NotifyIcon::Unregister() {
   NOTIFYICONDATAW notifyIconData = mNotifyIconData;
   return Shell_NotifyIconW(NIM_DELETE, &notifyIconData);
 }
+
+BOOL NotifyIcon::SetIcon(HICON hIcon) {
+  mNotifyIconData.hIcon = hIcon;
+  NOTIFYICONDATAW notifyIconData = mNotifyIconData;
+  return Shell_NotifyIconW(NIM_MODIFY, &notifyIconData);
+}

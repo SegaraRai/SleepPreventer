@@ -3,6 +3,7 @@
 // SleepPreventer.rc ‚ÅŽg—p
 //
 #define IDI_ICON                        104
+#define IDI_ICON_DISABLED               105
 #define IDR_MENU                        106
 #define IDM_CTX_QUIT                    40001
 #define IDM_CTX_TOGGLE_ENABLE           40002
@@ -14,7 +15,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        107
-#define _APS_NEXT_COMMAND_VALUE         40013
+#define _APS_NEXT_COMMAND_VALUE         40005
 #define _APS_NEXT_CONTROL_VALUE         1001
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

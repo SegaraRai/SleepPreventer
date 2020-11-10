@@ -11,4 +11,5 @@ public:
 
   BOOL Register();
   BOOL Unregister();
+  BOOL SetIcon(HICON hIcon);
 };

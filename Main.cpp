@@ -37,7 +37,9 @@ namespace {
   const UINT gTaskbarCreatedMessage = RegisterWindowMessageW(L"TaskbarCreated");
   std::optional<ConfigFile> gConfigFile;
   std::optional<NotifyIcon> gNotifyIcon;
-  HINSTANCE gHInstance;
+  HINSTANCE gHInstance = NULL;
+  HICON gHIcon = NULL;
+  HICON gHIconDisabled = NULL;
 
   std::wstring GetModuleFilepath(HMODULE hModule) {
     constexpr std::size_t BufferSize = 65600;
@@ -49,6 +51,12 @@ namespace {
     }
 
     return std::wstring(buffer.get());
+  }
+
+  void UpdateNotifyIcon() {
+    if (gNotifyIcon) {
+      gNotifyIcon.value().SetIcon(Preventer::gEnable ? gHIcon : gHIconDisabled);
+    }
   }
 }
 
@@ -103,6 +111,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
           Preventer::ApplyState();
           configFile.Set(L"enable"s, Preventer::gEnable ? 1 : 0);
           configFile.Save();
+          UpdateNotifyIcon();
           return 0;
 
         case IDM_CTX_TOGGLE_SYSTEM:
@@ -317,8 +326,15 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
   }
 
   // open icon
-  const auto hIcon = LoadIconW(hInstance, MAKEINTRESOURCEW(IDI_ICON));
-  if (hIcon == NULL) {
+  gHIcon = LoadIconW(hInstance, MAKEINTRESOURCEW(IDI_ICON));
+  if (gHIcon == NULL) {
+    const std::wstring message = L"Initialization error: LoadIconW failed with code "s + std::to_wstring(GetLastError());
+    MessageBoxW(NULL, message.c_str(), L"SleepPreventer", MB_OK | MB_ICONERROR | MB_SETFOREGROUND);
+    return 1;
+  }
+
+  gHIconDisabled = LoadIconW(hInstance, MAKEINTRESOURCEW(IDI_ICON_DISABLED));
+  if (gHIconDisabled == NULL) {
     const std::wstring message = L"Initialization error: LoadIconW failed with code "s + std::to_wstring(GetLastError());
     MessageBoxW(NULL, message.c_str(), L"SleepPreventer", MB_OK | MB_ICONERROR | MB_SETFOREGROUND);
     return 1;
@@ -332,12 +348,12 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
     0,
     0,
     hInstance,
-    hIcon,
+    gHIcon,
     LoadCursorW(NULL, IDC_ARROW),
     reinterpret_cast<HBRUSH>(GetStockObject(WHITE_BRUSH)),
     NULL,
     ClassName,
-    hIcon,
+    gHIcon,
   };
   if (!RegisterClassExW(&wndClassExW)) {
     const std::wstring message = L"Initialization error: RegisterClassExW failed with code "s + std::to_wstring(GetLastError());
@@ -415,7 +431,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
     NotifyIconId,
     NIF_MESSAGE | NIF_ICON | NIF_TIP | NIF_SHOWTIP,
     NotifyIconCallbackMessageId,
-    hIcon,
+    gHIcon,
     L"SleepPreventer",
     0,
     0,
@@ -454,6 +470,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
   Preventer::gSystemFlag = configFile.Get(L"system"s).value_or(0) != 0;
   Preventer::gDisplayFlag = configFile.Get(L"display"s).value_or(0) != 0;
   Preventer::ApplyStateFromIPCFlags(ipcFlags);
+
+  UpdateNotifyIcon();
 
   // message loop
   MSG msg;

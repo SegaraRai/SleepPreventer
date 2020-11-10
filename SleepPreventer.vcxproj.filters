@@ -57,5 +57,8 @@
     <Image Include="Icon.ico">
       <Filter>リソース ファイル</Filter>
     </Image>
+    <Image Include="IconDisabled.ico">
+      <Filter>リソース ファイル</Filter>
+    </Image>
   </ItemGroup>
 </Project>
