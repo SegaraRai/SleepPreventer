@@ -102,8 +102,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,1,1
- PRODUCTVERSION 1,0,1,1
+ FILEVERSION 1,2,0,0
+ PRODUCTVERSION 1,2,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -120,12 +120,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "SegaraRai"
             VALUE "FileDescription", "SleepPreventer"
-            VALUE "FileVersion", "1.0.1.1"
+            VALUE "FileVersion", "1.2.0"
             VALUE "InternalName", "SleepPreventer.exe"
             VALUE "LegalCopyright", "Copyright (C) 2020 SegaraRai"
             VALUE "OriginalFilename", "SleepPreventer.exe"
             VALUE "ProductName", "SleepPreventer"
-            VALUE "ProductVersion", "1.0.1.1"
+            VALUE "ProductVersion", "1.2.0"
         END
     END
     BLOCK "VarFileInfo"
